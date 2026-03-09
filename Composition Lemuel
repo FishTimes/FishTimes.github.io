@@ -1,0 +1,73 @@
+/*
+Composition Maker 3.0
+Julian C, 03/09/2026
+ */
+
+//title
+String[] words = {"Surgeon", "Lemuel", "Gulliver"};
+int wordX = 65;
+int wordY = 65;
+int offset = 4;
+int fontSize = 65;
+int shadowValue = 10;
+int fontValue = 250;
+
+//frame rate and maximum amount of frames
+int rate = 200; //one frame per second with a maximum of x frames
+int maxFrames = 300;
+
+//shape
+int maxRandomColorValue = 255;
+int minCircleDiameter = 50;
+int maxCircleDiameter = 400;
+int minAlpha = 40;
+int maxAlpha = 70;
+
+void setup() {
+  size(800, 800);
+  background(random(maxRandomColorValue), random(maxRandomColorValue), random(maxRandomColorValue));
+  frameRate(rate);
+  println("Frame rate is set to " + rate + " and the maximum frames will be " + maxFrames + ".");
+}
+
+void draw() {
+  DrawShape();
+
+  //conditional statement to see how many frames have been rendered
+  if (frameCount >= maxFrames)
+  {
+    CreateTitle();
+  }
+
+  saveFrame();
+}
+
+//=======================================
+//Custom components
+//=======================================
+
+void DrawShape()
+{
+  fill(random(maxRandomColorValue), random(maxRandomColorValue), random(maxRandomColorValue), random(minAlpha, maxAlpha));
+  circle (random(width), random(height), random(minCircleDiameter, maxCircleDiameter));  
+}
+
+void CreateTitle()
+{
+  //set text size
+    textSize(fontSize);
+
+    //loop to print out words in the array
+    for (int i=0; i< words.length; i++)
+    {
+      // "shadow" effect
+      fill(shadowValue);
+      text(words[i], wordX, wordY);
+
+      // text in white on top of shadow
+      fill(fontValue);
+      text(words[i], wordX-offset, wordY-offset);
+      wordY+= fontSize; //move next line down
+    }
+    noLoop();
+}
